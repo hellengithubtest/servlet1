@@ -3,9 +3,11 @@ package servlets;
 import java.util.TimerTask;
 
 public class ScheduledTask extends TimerTask {
-    private String text = "hello world ";
-    public ScheduledTask(String string) {
-        this.text.concat(string);
+    private String text = "hello world";
+
+    public void setText(String text) {
+        String before = this.text;
+        this.text = before.concat(text);
     }
     @Override
     public void run() {

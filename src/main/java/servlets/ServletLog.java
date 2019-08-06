@@ -10,11 +10,12 @@ import java.io.PrintWriter;
 import java.util.Timer;
 
 public class ServletLog extends HttpServlet {
-    String name = "";
+    ScheduledTask task;
+
     @Override
     public void init(ServletConfig config) throws ServletException{
         Timer timer = new Timer();
-        ScheduledTask task = new ScheduledTask(this.name);
+        task = new ScheduledTask();
         timer.scheduleAtFixedRate(task, 0, 1000);
     }
 
@@ -24,16 +25,8 @@ public class ServletLog extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
-        System.out.println("Servlet Log do post");
         String string = request.getParameter("fname");
-        System.out.println(string);
-        this.name = string;
-        //this.destroy();
-        this.init();
-        //String name1 = getInitParameter("name");
-/*        ServletContext servletContext = getServletContext();
-        servletContext.setAttribute("name", string);*/
-        //PrintWriter out = new PrintWriter("The value is changed");
+        task.setText(string);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
