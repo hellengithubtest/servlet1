@@ -17,6 +17,8 @@ public class ServletLog extends HttpServlet {
         Timer timer = new Timer();
         task = new ScheduledTask();
         timer.scheduleAtFixedRate(task, 0, 1000);
+        System.out.println(config.getServletContext().getAttribute("fname"));
+        config.getServletContext().setAttribute("fname", task.getText());
     }
 
     @Override
@@ -26,6 +28,7 @@ public class ServletLog extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
         String string = request.getParameter("fname");
+        request.setAttribute("fname", string);
         task.setText(string);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
